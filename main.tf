@@ -97,7 +97,7 @@ resource "aws_instance" "consul1" {
 
   provisioner "file" {
     content     = "${data.template_file.var.rendered}"
-    destination = "/var/tmp/start_consul.sh"
+    destination = "/var/tmp/scripts/start_consul.sh"
   }
 
   provisioner "remote-exec" {
@@ -135,7 +135,7 @@ resource "aws_instance" "consul2" {
 
   provisioner "file" {
     content     = "${data.template_file.var.rendered}"
-    destination = "/var/tmp/start_consul.sh"
+    destination = "/var/tmp/scripts/start_consul.sh"
   }
 
   provisioner "remote-exec" {
@@ -173,7 +173,7 @@ resource "aws_instance" "consul3" {
 
   provisioner "file" {
     content     = "${data.template_file.var.rendered}"
-    destination = "/var/tmp/start_consul.sh"
+    destination = "/var/tmp/scripts/start_consul.sh"
   }
 
   provisioner "remote-exec" {
@@ -211,7 +211,7 @@ resource "aws_instance" "client1" {
 
   provisioner "file" {
     content     = "${data.template_file.var.rendered}"
-    destination = "/var/tmp/start_consul.sh"
+    destination = "/var/tmp/scripts/start_consul.sh"
   }
 
   provisioner "remote-exec" {
