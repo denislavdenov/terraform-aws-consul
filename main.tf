@@ -1,7 +1,6 @@
 # Below are resources needed for enabling the consul auto-join function. 
 # EC2 instaces need to have iam_instance_profile with the below policy and set of rules so each EC2 can read the metadata in order to find the private_ips based on a specific tag key/value.
 data "aws_iam_policy_document" "assume_role" {
-
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
@@ -14,14 +13,11 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "consul" {
-
   name_prefix        = "consul_role"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role.json}"
 }
 
 data "aws_iam_policy_document" "consul" {
-
-
   statement {
     sid       = "AllowSelfAssembly"
     effect    = "Allow"
@@ -41,14 +37,12 @@ data "aws_iam_policy_document" "consul" {
 }
 
 resource "aws_iam_role_policy" "consul" {
-
   name_prefix = "consul_role"
   role        = "${aws_iam_role.consul.id}"
   policy      = "${data.aws_iam_policy_document.consul.json}"
 }
 
 resource "aws_iam_instance_profile" "consul" {
-
   name_prefix = "consul_role"
   role        = "${aws_iam_role.consul.name}"
 }
@@ -66,12 +60,12 @@ data "template_file" "var" {
   depends_on = ["aws_key_pair.key"]
 
   vars = {
-    DOMAIN        = "${var.domain}"
-    DCNAME        = "${var.dcname}"
-    LOG_LEVEL     = "debug"
-    SERVER_COUNT  = 3
-    var2          = "$(hostname)"
-    IP            = "$(hostname -I)"
+    DOMAIN       = "${var.domain}"
+    DCNAME       = "${var.dcname}"
+    LOG_LEVEL    = "debug"
+    SERVER_COUNT = 3
+    var2         = "$(hostname)"
+    IP           = "$(hostname -I)"
   }
 }
 
@@ -87,7 +81,7 @@ resource "aws_instance" "consul1" {
   associate_public_ip_address = true
 
   tags {
-    Name = "consul-server1"
+    Name        = "consul-server1"
     consul_join = "approved"
   }
 
@@ -125,7 +119,7 @@ resource "aws_instance" "consul2" {
   associate_public_ip_address = true
 
   tags {
-    Name = "consul-server2"
+    Name        = "consul-server2"
     consul_join = "approved"
   }
 
@@ -163,7 +157,7 @@ resource "aws_instance" "consul3" {
   associate_public_ip_address = true
 
   tags {
-    Name = "consul-server3"
+    Name        = "consul-server3"
     consul_join = "approved"
   }
 
@@ -201,7 +195,7 @@ resource "aws_instance" "client1" {
   associate_public_ip_address = true
 
   tags {
-    Name = "consul-client1"
+    Name        = "consul-client1"
     consul_join = "approved"
   }
 
