@@ -1,17 +1,27 @@
-variable "aws_access_key" {}
+variable "aws_access_key" {
+  description = "Your AWS access key."
+}
 
-variable "aws_secret_key" {}
+variable "aws_secret_key" {
+  description = "Your AWS secret key."
+}
 
-variable "instance_type" {}
+variable "instance_type" {
+  description = "Specify the instance type."
+}
 
-variable "subnet_id" {}
+variable "subnet_id" {
+  description = "Specify subnet ID."
+}
 
 variable "security_group_id" {
-  type = "list"
+  type        = "list"
+  description = "Security group that you want to use."
 }
 
 variable "ami" {
-  type = "map"
+  type        = "map"
+  description = "AMI IDs based on if node is a client or a server"
 
   default = {
     "client" = "ami-06c350abb0d40236f"
@@ -20,13 +30,11 @@ variable "ami" {
 }
 
 variable "domain" {
-  default = "consul"
+  default     = "consul"
+  description = "Domain of the Consul cluster"
 }
 
 variable "dcname" {
-  default = "dc1"
-}
-
-variable "DC" {
-  default = "31"
+  default     = "dc1"
+  description = "Datacenter name of the Consul cluster"
 }
