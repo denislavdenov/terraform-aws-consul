@@ -62,7 +62,7 @@ resource "aws_key_pair" "key" {
 # Data source that is needed in order to dinamicly publish values of variables into the script that is creating Consul configuration files and starting it.
 
 data "template_file" "var" {
-  template   = "${file("${path.module}/scripts/start_consul.sh")}"
+  template   = "${file("${path.module}/scripts/start_consul.tpl")}"
   depends_on = ["aws_key_pair.key"]
 
   vars = {
@@ -98,16 +98,18 @@ resource "aws_instance" "consul1" {
 
   provisioner "file" {
     source      = "${path.module}/scripts"
-    destination = "/tmp"
+    destination = "/var/tmp"
+  }
+
+  provisioner "file" {
+    content     = "${data.template_file.var.rendered}"
+    destination = "/var/tmp/start_consul.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "cat <<EOT > /tmp/scripts/test.sh",
-      "${data.template_file.var.rendered}",
-      "EOT",
-      "sudo bash /tmp/scripts/test.sh",
-      "sudo bash /tmp/scripts/keyvalue.sh",
+      "sudo bash /var/tmp/scripts/start_consul.sh",
+      "sudo bash /var/tmp/scripts/keyvalue.sh",
     ]
   }
 }
@@ -134,16 +136,18 @@ resource "aws_instance" "consul2" {
 
   provisioner "file" {
     source      = "${path.module}/scripts"
-    destination = "/tmp"
+    destination = "/var/tmp"
+  }
+
+  provisioner "file" {
+    content     = "${data.template_file.var.rendered}"
+    destination = "/var/tmp/start_consul.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "cat <<EOT > /tmp/scripts/test.sh",
-      "${data.template_file.var.rendered}",
-      "EOT",
-      "sudo bash /tmp/scripts/test.sh",
-      "sudo bash /tmp/scripts/keyvalue.sh",
+      "sudo bash /var/tmp/scripts/start_consul.sh",
+      "sudo bash /var/tmp/scripts/keyvalue.sh",
     ]
   }
 }
@@ -170,16 +174,18 @@ resource "aws_instance" "consul3" {
 
   provisioner "file" {
     source      = "${path.module}/scripts"
-    destination = "/tmp"
+    destination = "/var/tmp"
+  }
+
+  provisioner "file" {
+    content     = "${data.template_file.var.rendered}"
+    destination = "/var/tmp/start_consul.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "cat <<EOT > /tmp/scripts/test.sh",
-      "${data.template_file.var.rendered}",
-      "EOT",
-      "sudo bash /tmp/scripts/test.sh",
-      "sudo bash /tmp/scripts/keyvalue.sh",
+      "sudo bash /var/tmp/scripts/start_consul.sh",
+      "sudo bash /var/tmp/scripts/keyvalue.sh",
     ]
   }
 }
@@ -206,18 +212,20 @@ resource "aws_instance" "client1" {
 
   provisioner "file" {
     source      = "${path.module}/scripts"
-    destination = "/tmp"
+    destination = "/var/tmp"
+  }
+
+  provisioner "file" {
+    content     = "${data.template_file.var.rendered}"
+    destination = "/var/tmp/start_consul.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "cat <<EOT > /tmp/scripts/test.sh",
-      "${data.template_file.var.rendered}",
-      "EOT",
-      "sudo bash /tmp/scripts/test.sh",
-      "sudo bash /tmp/scripts/consul-template.sh",
-      "sudo bash /tmp/scripts/conf-dnsmasq.sh",
-      "sudo bash /tmp/scripts/check_nginx.sh",
+      "sudo bash /var/tmp/scripts/start_consul.sh",
+      "sudo bash /var/tmp/scripts/consul-template.sh",
+      "sudo bash /var/tmp/scripts/conf-dnsmasq.sh",
+      "sudo bash /var/tmp/scripts/check_nginx.sh",
     ]
   }
 }
