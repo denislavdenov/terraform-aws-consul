@@ -82,7 +82,6 @@ resource "aws_instance" "consul_servers_dc1" {
   associate_public_ip_address = true
   count                       = "${var.server_dc1_count}"
 
-
   tags {
     Name        = "consul-server${count.index + 1}"
     consul_join = "approved"
@@ -154,12 +153,9 @@ resource "aws_instance" "nginx_clients_dc1" {
 
 # Outputs the instances public ips.
 
-
 output "server_ips" {
   value = "${aws_instance.consul_servers_dc1.*.public_ip}"
 }
-
-
 
 output "client_ips" {
   value = "${aws_instance.nginx_clients_dc1.*.public_ip}"
