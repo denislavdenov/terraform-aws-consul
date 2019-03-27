@@ -1,0 +1,21 @@
+---
+driver:
+  name: terraform
+
+provisioner:
+  name: terraform
+
+verifier:
+  name: terraform
+  systems:
+    - name: basic
+      attrs_outputs:
+        client_ip1: client_ips
+        server_ip1: server_ips
+      backend: local
+
+platforms:
+  - name: terraform
+
+suites:
+  - name: default
