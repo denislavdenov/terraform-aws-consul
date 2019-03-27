@@ -45,12 +45,12 @@ variable "region" {
 
 variable "server_dc1_count" {
   description = "Count of Consul servers in DC1."
-  default = "3"
+  default     = "3"
 }
 
 variable "nginx_client_dc1_count" {
   description = "Count of nginx consul clients in DC1."
-  default = "1"
+  default     = "1"
 }
 
 variable "IP_DC1" {
