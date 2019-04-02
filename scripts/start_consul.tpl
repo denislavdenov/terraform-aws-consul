@@ -55,7 +55,7 @@ EOF
 }
 
 # Function that creates the conf file for the Consul servers. 
-create_server_conf () {
+create_server_conf_sofia () {
     cat << EOF > /etc/consul.d/config_${DCNAME}.json
     
     {
@@ -65,7 +65,31 @@ create_server_conf () {
         "bind_addr": "${IP}",
         "client_addr": "0.0.0.0",
         "bootstrap_expect": ${SERVER_COUNT},
-        "retry_join": ["provider=aws tag_key=consul_join tag_value=approved"],
+        "retry_join": ["provider=aws tag_key=consul tag_value=sofia"],
+        "retry_join_wan": ["provider=aws tag_key=consul tag_value=varna"],
+        "log_level": "${LOG_LEVEL}",
+        "data_dir": "/tmp/consul",
+        "enable_script_checks": true,
+        "domain": "${DOMAIN}",
+        "datacenter": "${DCNAME}",
+        "ui": true
+
+    }
+EOF
+}
+
+create_server_conf_varna () {
+    cat << EOF > /etc/consul.d/config_${DCNAME}.json
+    
+    {
+        
+        "server": true,
+        "node_name": "${var2}",
+        "bind_addr": "${IP}",
+        "client_addr": "0.0.0.0",
+        "bootstrap_expect": ${SERVER_COUNT},
+        "retry_join_wan": ["provider=aws tag_key=consul tag_value=sofia"],
+        "retry_join": ["provider=aws tag_key=consul tag_value=varna"],
         "log_level": "${LOG_LEVEL}",
         "data_dir": "/tmp/consul",
         "enable_script_checks": true,
@@ -78,14 +102,14 @@ EOF
 }
 
 # Function that creates the conf file for Consul clients. 
-create_client_conf () {
+create_client_conf() {
     cat << EOF > /etc/consul.d/consul_client.json
 
         {
             "node_name": "${var2}",
             "bind_addr": "${IP}",
             "client_addr": "0.0.0.0",
-            "retry_join": ["provider=aws tag_key=consul_join tag_value=approved"],
+            "retry_join": ["provider=aws tag_key=consul tag_value=${DCNAME}"],
             "log_level": "${LOG_LEVEL}",
             "data_dir": "/tmp/consul",
             "enable_script_checks": true,
@@ -98,27 +122,42 @@ EOF
 }
 # Starting consul
 init_consul ${LOG_LEVEL} ${var2} 
+
 if [[ "${var2}" =~ "ip-172-31-16" ]]; then
     killall consul
 
-    create_server_conf
+    create_server_conf_sofia
 
     sudo systemctl enable consul >/dev/null
    
     sudo systemctl start consul >/dev/null
     sleep 5
-else
-    if [[ "${var2}" =~ "ip-172-31-17" ]]; then
-        killall consul
-        create_client_conf
-    fi
-   
+fi
+
+if [[ "${var2}" =~ "ip-172-31-32" ]]; then
+    killall consul
+
+    create_server_conf_varna
+
     sudo systemctl enable consul >/dev/null
+   
     sudo systemctl start consul >/dev/null
+    sleep 5
+    
     
 fi
+
+if [[ "${var2}" =~ "ip-172-31-17" || "${var2}" =~ "ip-172-31-33" ]]; then
+    killall consul
+    create_client_conf
+    sudo systemctl enable consul >/dev/null
+    sudo systemctl start consul >/dev/null
+fi
+   
+    
 
 
 sleep 5
 consul members
+consul members -wan
 set +x

@@ -10,8 +10,10 @@ verifier:
   systems:
     - name: basic
       attrs_outputs:
-        client_ip1: client_ips
-        server_ip1: server_ips
+        client_ips_sofia: client_ips_sofia
+        server_ips_sofia: server_ips_sofia
+        client_ips_varna: client_ips_varna
+        server_ips_varna: server_ips_varna
       backend: local
 
 platforms:
