@@ -1,18 +1,8 @@
-variable "aws_access_key" {
-  description = "Your AWS access key."
-}
-
-variable "aws_secret_key" {
-  description = "Your AWS secret key."
-}
-
 variable "instance_type" {
   description = "Specify the instance type."
 }
 
-variable "subnet_id" {
-
-}
+variable "subnet_id" {}
 
 variable "security_group_id" {
   type        = "list"

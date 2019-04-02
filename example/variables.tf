@@ -7,6 +7,7 @@ variable "instance_type" {}
 variable "subnet_id" {
   type        = "map"
   description = "subnets"
+
   default = {
     "dc1" = "subnet-06f4353914e004355"
     "dc2" = "subnet-0c6f1bb70d341543f"
@@ -25,6 +26,7 @@ variable "region" {
 variable "dcname" {
   type        = "map"
   description = "Datacenter name of the Consul cluster"
+
   default = {
     "dc1" = "sofia"
     "dc2" = "varna"
