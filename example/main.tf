@@ -7,9 +7,9 @@ module "sofia" {
   aws_access_key    = "${var.aws_access_key}"
   aws_secret_key    = "${var.aws_secret_key}"
   region            = "${var.region}"
-  dcname            = "${var.dcname["sofia"]}"
-  IP                = "${var.IP_sofia}"
-  subnet_id         = "${var.subnet_id["sofia"]}"
+  dcname            = "${var.dcname["dc1"]}"
+  IP                = "${var.IP_dc1}"
+  subnet_id         = "${var.subnet_id["dc1"]}"
 }
 
 module "varna" {
@@ -21,9 +21,9 @@ module "varna" {
   aws_access_key    = "${var.aws_access_key}"
   aws_secret_key    = "${var.aws_secret_key}"
   region            = "${var.region}"
-  dcname            = "${var.dcname["varna"]}"
-  IP                = "${var.IP_varna}"
-  subnet_id         = "${var.subnet_id["varna"]}"
+  dcname            = "${var.dcname["dc2"]}"
+  IP                = "${var.IP_dc2}"
+  subnet_id         = "${var.subnet_id["dc2"]}"
 }
 
 output "server_ips_sofia" {
