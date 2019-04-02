@@ -83,7 +83,7 @@ resource "aws_instance" "consul_servers" {
   count                       = "${var.server_count}"
 
   tags {
-    Name        = "consul-server${count.index + 1}"
+    Name   = "consul-server${count.index + 1}"
     consul = "${var.dcname}"
   }
 
@@ -122,7 +122,7 @@ resource "aws_instance" "nginx_clients" {
   count                       = "${var.nginx_client_count}"
 
   tags {
-    Name        = "consul-client${count.index + 1}"
+    Name   = "consul-client${count.index + 1}"
     consul = "${var.dcname}"
   }
 
