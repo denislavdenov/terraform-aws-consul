@@ -8,8 +8,8 @@ variable "subnet_id" {
   type        = "map"
   description = "subnets"
   default = {
-    "sofia" = "subnet-06f4353914e004355"
-    "varna" = "subnet-0c6f1bb70d341543f"
+    "dc1" = "subnet-06f4353914e004355"
+    "dc2" = "subnet-0c6f1bb70d341543f"
   }
 }
 
@@ -26,12 +26,12 @@ variable "dcname" {
   type        = "map"
   description = "Datacenter name of the Consul cluster"
   default = {
-    "sofia" = "sofia"
-    "varna" = "varna"
+    "dc1" = "sofia"
+    "dc2" = "varna"
   }
 }
 
-variable "IP_sofia" {
+variable "IP_dc1" {
   type        = "map"
   description = "IP segment based on if node is a server or a client."
 
@@ -41,7 +41,7 @@ variable "IP_sofia" {
   }
 }
 
-variable "IP_varna" {
+variable "IP_dc2" {
   type        = "map"
   description = "IP segment based on if node is a server or a client."
 
