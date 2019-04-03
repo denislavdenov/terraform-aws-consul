@@ -83,8 +83,8 @@ resource "aws_instance" "consul_servers" {
   count                       = "${var.server_count}"
 
   tags {
-    Name   = "consul-server${count.index + 1}"
-    consul = "${var.dcname}"
+    Name     = "consul-server${count.index + 1}"
+    consul   = "${var.dcname}"
     join_wan = "${var.join_wan}"
   }
 
@@ -121,7 +121,7 @@ resource "aws_instance" "nginx_clients" {
   private_ip                  = "${var.IP["client"]}${count.index + 1}"
   associate_public_ip_address = true
   count                       = "${var.nginx_client_count}"
-  depends_on = ["aws_instance.consul_servers"]
+  depends_on                  = ["aws_instance.consul_servers"]
 
   tags {
     Name   = "consul-client${count.index + 1}"
@@ -150,7 +150,7 @@ resource "aws_instance" "nginx_clients" {
       "sudo bash /var/tmp/scripts/conf-dnsmasq.sh",
       "sudo bash /var/tmp/scripts/check_nginx.sh",
       "sleep 20",
-      "consul reload"
+      "consul reload",
     ]
   }
 }

@@ -58,7 +58,7 @@ variable "join_wan" {
   description = "Variable used to properly assign tags for auto join."
 
   default = {
-    "dc1" = "dc1"
+    "dc1"     = "dc1"
     "not_dc1" = ""
   }
 }
