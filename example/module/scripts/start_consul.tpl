@@ -66,7 +66,7 @@ create_server_conf () {
         "bind_addr": "${IP}",
         "client_addr": "0.0.0.0",
         "bootstrap_expect": ${SERVER_COUNT},
-        "retry_join_wan": ["provider=aws tag_key=consul tag_value=sofia"],
+        "retry_join_wan": ["provider=aws tag_key=join_wan tag_value=dc1"],
         "retry_join": ["provider=aws tag_key=consul tag_value=${DCNAME}"],
         "log_level": "${LOG_LEVEL}",
         "data_dir": "/tmp/consul",

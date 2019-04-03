@@ -46,3 +46,7 @@ variable "nginx_client_count" {
   description = "Count of nginx consul clients in DC1."
   default     = "1"
 }
+
+variable "join_wan" {
+  description = "Variable used to properly assign tags for auto join."
+}
