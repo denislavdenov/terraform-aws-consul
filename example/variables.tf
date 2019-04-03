@@ -28,8 +28,8 @@ variable "dcname" {
   description = "Datacenter name of the Consul cluster"
 
   default = {
-    "dc1" = "varna"
-    "dc2" = "sofia"
+    "dc1" = "Plovdiv"
+    "dc2" = "Botevgrad"
   }
 }
 
@@ -50,5 +50,15 @@ variable "IP_dc2" {
   default = {
     "client" = "172.31.33.1"
     "server" = "172.31.32.1"
+  }
+}
+
+variable "join_wan" {
+  type        = "map"
+  description = "Variable used to properly assign tags for auto join."
+
+  default = {
+    "dc1" = "dc1"
+    "not_dc1" = ""
   }
 }
