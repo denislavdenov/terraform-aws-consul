@@ -28,8 +28,8 @@ variable "dcname" {
   description = "Datacenter name of the Consul cluster"
 
   default = {
-    "dc1" = "sofia"
-    "dc2" = "varna"
+    "dc1" = "varna"
+    "dc2" = "sofia"
   }
 }
 
