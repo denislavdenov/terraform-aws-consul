@@ -53,5 +53,5 @@ consul-template -config /etc/ct/config.hcl &
 
 
 
-sleep 1
+sleep 45
 consul reload

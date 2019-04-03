@@ -147,6 +147,7 @@ resource "aws_instance" "nginx_clients" {
       "sudo bash /var/tmp/scripts/consul-template.sh",
       "sudo bash /var/tmp/scripts/conf-dnsmasq.sh",
       "sudo bash /var/tmp/scripts/check_nginx.sh",
+      "consul reload"
     ]
   }
 }
